@@ -4,7 +4,10 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <sys/param.h>
+#include <sys/types.h>
 #include <locale.h>
+#include <getopt.h>
 
 #define MAX_PATH 1024
 
@@ -35,7 +38,7 @@ void dirReader(const char *dir, int opt_l, int opt_d, int opt_f, int opt_s) {
             continue;
         }
 
-        if(S_ISLINK(statbuf.st_mode) && opt_l) {
+        if(S_ISLNK(statbuf.st_mode) && opt_l) {
             printf("%s\n", path);
         } else if(S_ISDIR(statbuf.st_mode) && opt_d) {
             printf("%s\n", path);
@@ -48,12 +51,8 @@ void dirReader(const char *dir, int opt_l, int opt_d, int opt_f, int opt_s) {
         if(S_ISDIR(statbuf.st_mode)) {
             dirReader(path, opt_l, opt_d, opt_f, opt_s);
         }
-
-        closedir(dp);
-        free(entry);
-
-        dp = NULL;
-        entry = NULL;
     }
+
+    closedir(dp);
 
 }
