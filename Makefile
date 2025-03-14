@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -I./src/headers
+CFLAGS = -W -Wall -Wextra -I./src/headers -D_POSIX_C_SOURCE=200809L --std=c17 -pedantic -Wno-unused-parameter -Wno-unused-variable -Werror
 
 SRC_SRC = src
 BUILD_DIR = build
